@@ -63,8 +63,8 @@ internal abstract class Graphic(
             override fun onClick() {
                 boxHelper.clearHelperBox()
                 toggleSelection()
-                // Change the in-focus view
                 viewState.currentSelectedView = rootView
+                updateView(rootView)
             }
 
             override fun onLongClick() {

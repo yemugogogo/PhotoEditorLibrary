@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.Log
@@ -54,23 +55,39 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
     }
 
     override fun addText(text: String?, colorCodeTextView: Int) {
-        addText(null, text, colorCodeTextView)
+        addText(null, text, colorCodeTextView, null)
     }
 
     override fun addText(textTypeface: Typeface?, text: String?, colorCodeTextView: Int) {
+        addText(textTypeface, text, colorCodeTextView, null)
+    }
+
+    override fun addText(
+        textTypeface: Typeface?,
+        text: String?,
+        colorCodeTextView: Int,
+        colorCodeBackground: Int?
+    ) {
         val styleBuilder = TextStyleBuilder()
         styleBuilder.withTextColor(colorCodeTextView)
         if (textTypeface != null) {
             styleBuilder.withTextFont(textTypeface)
         }
-        addText(text, styleBuilder)
+        addText(text, styleBuilder, colorCodeBackground ?: Color.TRANSPARENT)
     }
 
-    override fun addText(text: String?, styleBuilder: TextStyleBuilder?) {
+    override fun addText(text: String?, styleBuilder: TextStyleBuilder?, colorCodeBackground: Int) {
         drawingView?.enableDrawing(false)
         val multiTouchListener = getMultiTouchListener(isTextPinchScalable)
         val textGraphic =
-            Text(parentView, multiTouchListener, viewState, mDefaultTextTypeface, mGraphicManager)
+            Text(
+                parentView,
+                multiTouchListener,
+                viewState,
+                mDefaultTextTypeface,
+                colorCodeBackground,
+                mGraphicManager
+            )
         textGraphic.buildView(text, styleBuilder)
         addToEditor(textGraphic)
     }
@@ -88,13 +105,44 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
         editText(view, inputText, styleBuilder)
     }
 
+    override fun editText(
+        view: View,
+        textTypeface: Typeface?,
+        inputText: String?,
+        colorCode: Int,
+        colorCodeBackground: Int
+    ) {
+        val styleBuilder = TextStyleBuilder()
+        styleBuilder.withTextColor(colorCode)
+        if (textTypeface != null) {
+            styleBuilder.withTextFont(textTypeface)
+        }
+        editText(view, inputText, styleBuilder, colorCodeBackground)
+    }
+
     override fun editText(view: View, inputText: String?, styleBuilder: TextStyleBuilder?) {
         val inputTextView = view.findViewById<TextView>(R.id.tvPhotoEditorText)
         if (inputTextView != null && viewState.containsAddedView(view) && !TextUtils.isEmpty(
                 inputText
             )
         ) {
+            editText(view, inputText, styleBuilder, null)
+        }
+    }
+
+    override fun editText(
+        view: View,
+        inputText: String?,
+        styleBuilder: TextStyleBuilder?,
+        colorCodeBackground: Int?
+    ) {
+        val inputTextView = view.findViewById<TextView>(R.id.tvPhotoEditorText)
+        if (inputTextView != null && viewState.containsAddedView(view) && !TextUtils.isEmpty(
+                inputText
+            )
+        ) {
             inputTextView.text = inputText
+            inputTextView.setBackgroundColor(colorCodeBackground ?: Color.TRANSPARENT)
             styleBuilder?.applyStyle(inputTextView)
             mGraphicManager.updateView(view)
         }

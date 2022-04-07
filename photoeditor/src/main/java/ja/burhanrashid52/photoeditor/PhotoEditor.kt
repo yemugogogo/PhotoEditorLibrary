@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.view.View
 import android.widget.ImageView
@@ -43,9 +44,25 @@ interface PhotoEditor {
      * @param textTypeface      typeface for custom font in the text
      * @param text              text to display
      * @param colorCodeTextView text color to be displayed
+     * @param colorCodeBackground text background color to be displayed
      */
     @SuppressLint("ClickableViewAccessibility")
-    fun addText(textTypeface: Typeface?, text: String?, colorCodeTextView: Int)
+    fun addText(
+        textTypeface: Typeface?,
+        text: String?,
+        colorCodeTextView: Int
+    )
+
+    /**
+     * This add the text on the [PhotoEditorView] with provided parameters
+     * by default [TextView.setText] will be 18sp
+     *
+     * @param textTypeface      typeface for custom font in the text
+     * @param text              text to display
+     * @param colorCodeTextView text color to be displayed
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    fun addText(textTypeface: Typeface?, text: String?, colorCodeTextView: Int, colorCodeBackground: Int?)
 
     /**
      * This add the text on the [PhotoEditorView] with provided parameters
@@ -55,7 +72,7 @@ interface PhotoEditor {
      * @param styleBuilder text style builder with your style
      */
     @SuppressLint("ClickableViewAccessibility")
-    fun addText(text: String?, styleBuilder: TextStyleBuilder?)
+    fun addText(text: String?, styleBuilder: TextStyleBuilder?, colorCodeBackground: Int)
 
     /**
      * This will update text and color on provided view
@@ -80,10 +97,29 @@ interface PhotoEditor {
      * This will update the text and color on provided view
      *
      * @param view         root view where text view is a child
+     * @param textTypeface update typeface for custom font in the text
+     * @param inputText    text to update [TextView]
+     * @param colorCode    color to update on [TextView]
+     */
+    fun editText(view: View, textTypeface: Typeface?, inputText: String?, colorCode: Int,colorCodeBackground: Int)
+
+    /**
+     * This will update the text and color on provided view
+     *
+     * @param view         root view where text view is a child
      * @param inputText    text to update [TextView]
      * @param styleBuilder style to apply on [TextView]
      */
     fun editText(view: View, inputText: String?, styleBuilder: TextStyleBuilder?)
+
+    /**
+     * This will update the text and color on provided view
+     *
+     * @param view         root view where text view is a child
+     * @param inputText    text to update [TextView]
+     * @param styleBuilder style to apply on [TextView]
+     */
+    fun editText(view: View, inputText: String?, styleBuilder: TextStyleBuilder?,colorCodeBackground: Int?)
 
     /**
      * Adds emoji to the [PhotoEditorView] which you drag,rotate and scale using pinch
@@ -287,18 +323,23 @@ interface PhotoEditor {
     class Builder(var context: Context, var parentView: PhotoEditorView) {
         @JvmField
         var imageView: ImageView? = null
+
         @JvmField
         var deleteView: View? = null
+
         @JvmField
         var drawingView: DrawingView? = null
+
         @JvmField
         var textTypeface: Typeface? = null
+
         @JvmField
         var emojiTypeface: Typeface? = null
 
         // By default, pinch-to-scale is enabled for text
         @JvmField
         var isTextPinchScalable = true
+
         @JvmField
         var clipSourceImage = false
         fun setDeleteView(deleteView: View?): Builder {
