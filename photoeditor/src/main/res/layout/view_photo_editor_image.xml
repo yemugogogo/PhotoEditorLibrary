@@ -11,6 +11,14 @@
         android:elevation="1dp"
         android:src="@drawable/ic_remove" />
 
+    <ImageView
+        android:id="@+id/imgPhotoEditorEdit"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="top|end"
+        android:elevation="1dp"
+        android:src="@drawable/ic_edit" />
+
     <FrameLayout
         android:id="@+id/frmBorder"
         android:layout_width="match_parent"

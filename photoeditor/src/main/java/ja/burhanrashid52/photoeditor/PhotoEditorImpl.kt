@@ -9,6 +9,7 @@ import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.Log
 import android.view.GestureDetector
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -54,29 +55,12 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
         addToEditor(sticker)
     }
 
-    override fun addText(text: String?, colorCodeTextView: Int) {
-        addText(null, text, colorCodeTextView, null)
+    override fun addText(text: String, textColor: Int?, textBackgroundColor: Int?) {
+        val styleBuilder = defaultTextStyleBuilder(textColor, textBackgroundColor)
+        addText(text, styleBuilder)
     }
 
-    override fun addText(textTypeface: Typeface?, text: String?, colorCodeTextView: Int) {
-        addText(textTypeface, text, colorCodeTextView, null)
-    }
-
-    override fun addText(
-        textTypeface: Typeface?,
-        text: String?,
-        colorCodeTextView: Int,
-        colorCodeBackground: Int?
-    ) {
-        val styleBuilder = TextStyleBuilder()
-        styleBuilder.withTextColor(colorCodeTextView)
-        if (textTypeface != null) {
-            styleBuilder.withTextFont(textTypeface)
-        }
-        addText(text, styleBuilder, colorCodeBackground ?: Color.TRANSPARENT)
-    }
-
-    override fun addText(text: String?, styleBuilder: TextStyleBuilder?, colorCodeBackground: Int) {
+    override fun addText(text: String?, styleBuilder: TextStyleBuilder?) {
         drawingView?.enableDrawing(false)
         val multiTouchListener = getMultiTouchListener(isTextPinchScalable)
         val textGraphic =
@@ -85,56 +69,21 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
                 multiTouchListener,
                 viewState,
                 mDefaultTextTypeface,
-                colorCodeBackground,
                 mGraphicManager
             )
         textGraphic.buildView(text, styleBuilder)
         addToEditor(textGraphic)
     }
 
-    override fun editText(view: View, inputText: String?, colorCode: Int) {
-        editText(view, null, inputText, colorCode)
-    }
-
-    override fun editText(view: View, textTypeface: Typeface?, inputText: String?, colorCode: Int) {
-        val styleBuilder = TextStyleBuilder()
-        styleBuilder.withTextColor(colorCode)
-        if (textTypeface != null) {
-            styleBuilder.withTextFont(textTypeface)
-        }
+    override fun editText(view: View, inputText: String, textColor: Int?, backgroundColor: Int?) {
+        val styleBuilder = defaultTextStyleBuilder(textColor, backgroundColor)
         editText(view, inputText, styleBuilder)
     }
 
     override fun editText(
         view: View,
-        textTypeface: Typeface?,
-        inputText: String?,
-        colorCode: Int,
-        colorCodeBackground: Int
-    ) {
-        val styleBuilder = TextStyleBuilder()
-        styleBuilder.withTextColor(colorCode)
-        if (textTypeface != null) {
-            styleBuilder.withTextFont(textTypeface)
-        }
-        editText(view, inputText, styleBuilder, colorCodeBackground)
-    }
-
-    override fun editText(view: View, inputText: String?, styleBuilder: TextStyleBuilder?) {
-        val inputTextView = view.findViewById<TextView>(R.id.tvPhotoEditorText)
-        if (inputTextView != null && viewState.containsAddedView(view) && !TextUtils.isEmpty(
-                inputText
-            )
-        ) {
-            editText(view, inputText, styleBuilder, null)
-        }
-    }
-
-    override fun editText(
-        view: View,
-        inputText: String?,
-        styleBuilder: TextStyleBuilder?,
-        colorCodeBackground: Int?
+        inputText: String,
+        styleBuilder: TextStyleBuilder?
     ) {
         val inputTextView = view.findViewById<TextView>(R.id.tvPhotoEditorText)
         if (inputTextView != null && viewState.containsAddedView(view) && !TextUtils.isEmpty(
@@ -142,7 +91,6 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
             )
         ) {
             inputTextView.text = inputText
-            inputTextView.setBackgroundColor(colorCodeBackground ?: Color.TRANSPARENT)
             styleBuilder?.applyStyle(inputTextView)
             mGraphicManager.updateView(view)
         }
@@ -159,6 +107,22 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
             Emoji(parentView, multiTouchListener, viewState, mGraphicManager, mDefaultEmojiTypeface)
         emoji.buildView(emojiTypeface, emojiName)
         addToEditor(emoji)
+    }
+
+    private fun defaultTextStyleBuilder(textColor: Int?, backgroundColor: Int?): TextStyleBuilder {
+        val styleBuilder = TextStyleBuilder()
+        styleBuilder.withTextFont(Typeface.DEFAULT_BOLD)
+        styleBuilder.withTextColor(textColor ?: Color.WHITE)
+        styleBuilder.withTextBorder(
+            TextBorder(
+                10F,
+                backgroundColor ?: Color.TRANSPARENT,
+                0,
+                Color.TRANSPARENT
+            )
+        )
+        styleBuilder.withGravity(Gravity.CENTER_HORIZONTAL)
+        return styleBuilder
     }
 
     private fun addToEditor(graphic: Graphic) {

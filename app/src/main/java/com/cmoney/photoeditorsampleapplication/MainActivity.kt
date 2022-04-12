@@ -1,11 +1,10 @@
 package com.cmoney.photoeditorsampleapplication
 
 import android.graphics.Color
-import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.cmoney.photoeditorsampleapplication.databinding.ActivityMainBinding
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                 binding.confirmTextView.setOnClickListener {
                     photoEditor.editText(
                         rootView ?: return@setOnClickListener,
-                        null,
                         binding.inputEditText.text.toString(),
                         Color.YELLOW,
                         Color.RED
@@ -80,9 +78,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.addTextTextView.setOnClickListener {
             photoEditor.addText(
-                Typeface.DEFAULT_BOLD,
                 binding.inputEditText.text.toString(),
-                Color.RED
+                Color.GREEN,
+                Color.BLUE
             )
             binding.inputEditText.text.clear()
         }
