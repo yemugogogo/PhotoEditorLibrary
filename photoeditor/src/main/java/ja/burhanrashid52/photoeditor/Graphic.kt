@@ -49,7 +49,7 @@ internal abstract class Graphic(
         val imgClose = rootView.findViewById<View>(R.id.imgPhotoEditorClose)
         val imgEdit = rootView.findViewById<View>(R.id.imgPhotoEditorEdit)
         if (frmBorder != null) {
-            frmBorder.setBackgroundResource(R.drawable.rounded_border_tv)
+            frmBorder.setBackgroundResource(R.drawable.square_border_tv)
             frmBorder.tag = true
         }
         if (imgClose != null) {

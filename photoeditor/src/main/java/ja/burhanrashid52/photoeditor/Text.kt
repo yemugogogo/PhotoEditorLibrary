@@ -1,17 +1,10 @@
 package ja.burhanrashid52.photoeditor
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.graphics.drawable.DrawableCompat
-import ja.burhanrashid52.photoeditor.extension.setTintColor
 
 
 /**
