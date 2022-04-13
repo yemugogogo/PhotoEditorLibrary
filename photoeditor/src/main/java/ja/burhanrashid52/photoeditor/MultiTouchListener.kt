@@ -206,6 +206,21 @@ internal class MultiTouchListener(
         private const val INVALID_POINTER_ID = -1
         private fun adjustAngle(degrees: Float): Float {
             return when {
+                degrees in 85.0..95.0 -> {
+                    90.0F
+                }
+                degrees in 175.0..185.0 -> {
+                    180.0F
+                }
+                degrees in 265.0..275.0 -> {
+                    270.0F
+                }
+                degrees in 0.0..5.0 -> {
+                    0.0F
+                }
+                degrees in 355.0..360.0 -> {
+                    360.0F
+                }
                 degrees > 180.0f -> {
                     degrees - 360.0f
                 }
