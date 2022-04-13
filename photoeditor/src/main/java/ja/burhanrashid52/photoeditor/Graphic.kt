@@ -34,23 +34,29 @@ internal abstract class Graphic(
     }
 
 
-    private fun setupRemoveView(rootView: View) {
+    private fun setupRemoveView(baseView: View) {
         //We are setting tag as ViewType to identify what type of the view it is
         //when we remove the view from stack i.e onRemoveViewListener(ViewType viewType, int numberOfAddedViews);
-        rootView.tag = viewType
-        val imgClose = rootView.findViewById<ImageView>(R.id.imgPhotoEditorClose)
+        baseView.tag = viewType
+        val imgClose = baseView.findViewById<ImageView>(R.id.imgPhotoEditorClose)
+        val imgEdit = baseView.findViewById<ImageView>(R.id.imgPhotoEditorEdit)
         imgClose?.setOnClickListener { graphicManager?.removeView(this@Graphic) }
+        imgEdit?.setOnClickListener { updateView(rootView) }
     }
 
     protected fun toggleSelection() {
         val frmBorder = rootView.findViewById<View>(R.id.frmBorder)
         val imgClose = rootView.findViewById<View>(R.id.imgPhotoEditorClose)
+        val imgEdit = rootView.findViewById<View>(R.id.imgPhotoEditorEdit)
         if (frmBorder != null) {
-            frmBorder.setBackgroundResource(R.drawable.rounded_border_tv)
+            frmBorder.setBackgroundResource(R.drawable.square_border_tv)
             frmBorder.tag = true
         }
         if (imgClose != null) {
             imgClose.visibility = View.VISIBLE
+        }
+        if (imgEdit != null) {
+            imgEdit.visibility = View.VISIBLE
         }
     }
 
@@ -64,7 +70,6 @@ internal abstract class Graphic(
                 boxHelper.clearHelperBox()
                 toggleSelection()
                 viewState.currentSelectedView = rootView
-                updateView(rootView)
             }
 
             override fun onLongClick() {

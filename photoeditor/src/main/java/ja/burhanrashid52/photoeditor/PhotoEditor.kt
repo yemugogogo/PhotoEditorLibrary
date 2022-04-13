@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.Typeface
 import android.view.View
 import android.widget.ImageView
@@ -32,37 +31,11 @@ interface PhotoEditor {
      * by default [TextView.setText] will be 18sp
      *
      * @param text              text to display
-     * @param colorCodeTextView text color to be displayed
+     * @param textColor text color to be displayed
+     * @param textBackgroundColor text background color to be displayed
      */
     @SuppressLint("ClickableViewAccessibility")
-    fun addText(text: String?, colorCodeTextView: Int)
-
-    /**
-     * This add the text on the [PhotoEditorView] with provided parameters
-     * by default [TextView.setText] will be 18sp
-     *
-     * @param textTypeface      typeface for custom font in the text
-     * @param text              text to display
-     * @param colorCodeTextView text color to be displayed
-     * @param colorCodeBackground text background color to be displayed
-     */
-    @SuppressLint("ClickableViewAccessibility")
-    fun addText(
-        textTypeface: Typeface?,
-        text: String?,
-        colorCodeTextView: Int
-    )
-
-    /**
-     * This add the text on the [PhotoEditorView] with provided parameters
-     * by default [TextView.setText] will be 18sp
-     *
-     * @param textTypeface      typeface for custom font in the text
-     * @param text              text to display
-     * @param colorCodeTextView text color to be displayed
-     */
-    @SuppressLint("ClickableViewAccessibility")
-    fun addText(textTypeface: Typeface?, text: String?, colorCodeTextView: Int, colorCodeBackground: Int?)
+    fun addText(text: String, textColor: Int?, textBackgroundColor: Int?)
 
     /**
      * This add the text on the [PhotoEditorView] with provided parameters
@@ -72,36 +45,17 @@ interface PhotoEditor {
      * @param styleBuilder text style builder with your style
      */
     @SuppressLint("ClickableViewAccessibility")
-    fun addText(text: String?, styleBuilder: TextStyleBuilder?, colorCodeBackground: Int)
+    fun addText(text: String?, styleBuilder: TextStyleBuilder?)
 
     /**
      * This will update text and color on provided view
      *
      * @param view      view on which you want update
      * @param inputText text to update [TextView]
-     * @param colorCode color to update on [TextView]
+     * @param textColor color to update on [TextView] textColor
+     * @param backgroundColor color to update on [TextView] backgroundColor
      */
-    fun editText(view: View, inputText: String?, colorCode: Int)
-
-    /**
-     * This will update the text and color on provided view
-     *
-     * @param view         root view where text view is a child
-     * @param textTypeface update typeface for custom font in the text
-     * @param inputText    text to update [TextView]
-     * @param colorCode    color to update on [TextView]
-     */
-    fun editText(view: View, textTypeface: Typeface?, inputText: String?, colorCode: Int)
-
-    /**
-     * This will update the text and color on provided view
-     *
-     * @param view         root view where text view is a child
-     * @param textTypeface update typeface for custom font in the text
-     * @param inputText    text to update [TextView]
-     * @param colorCode    color to update on [TextView]
-     */
-    fun editText(view: View, textTypeface: Typeface?, inputText: String?, colorCode: Int,colorCodeBackground: Int)
+    fun editText(view: View, inputText: String, textColor: Int?, backgroundColor: Int?)
 
     /**
      * This will update the text and color on provided view
@@ -110,16 +64,7 @@ interface PhotoEditor {
      * @param inputText    text to update [TextView]
      * @param styleBuilder style to apply on [TextView]
      */
-    fun editText(view: View, inputText: String?, styleBuilder: TextStyleBuilder?)
-
-    /**
-     * This will update the text and color on provided view
-     *
-     * @param view         root view where text view is a child
-     * @param inputText    text to update [TextView]
-     * @param styleBuilder style to apply on [TextView]
-     */
-    fun editText(view: View, inputText: String?, styleBuilder: TextStyleBuilder?,colorCodeBackground: Int?)
+    fun editText(view: View, inputText: String, styleBuilder: TextStyleBuilder?)
 
     /**
      * Adds emoji to the [PhotoEditorView] which you drag,rotate and scale using pinch

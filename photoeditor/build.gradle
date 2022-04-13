@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
 
 android {
 
@@ -58,14 +60,16 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication){
+                from components.release
 
-ext {
-    PUBLISH_GROUP_ID = 'com.burhanrashid52'
-    PUBLISH_VERSION = '2.0.0'
-    PUBLISH_ARTIFACT_ID = 'photoeditor'
+                groupId = 'com.github.yemugogogo'
+                artifactId = 'photo-editor'
+                version = '1.0.1'
+            }
+        }
+    }
 }
-
-//apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
-//repositories {
-//    mavenCentral()
-//}

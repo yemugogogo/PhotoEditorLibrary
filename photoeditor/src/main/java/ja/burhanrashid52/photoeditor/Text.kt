@@ -1,11 +1,11 @@
 package ja.burhanrashid52.photoeditor
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+
 
 /**
  * Created by Burhanuddin Rashid on 14/05/21.
@@ -17,7 +17,6 @@ internal class Text(
     private val mMultiTouchListener: MultiTouchListener,
     private val mViewState: PhotoEditorViewState,
     private val mDefaultTextTypeface: Typeface?,
-    private val mTextBackgroundColor: Int,
     private val mGraphicManager: GraphicManager
 ) : Graphic(
     context = mPhotoEditorView.context,
@@ -45,7 +44,6 @@ internal class Text(
         mTextView?.run {
             gravity = Gravity.CENTER
             typeface = mDefaultTextTypeface
-            this.setBackgroundColor(mTextBackgroundColor)
         }
     }
 

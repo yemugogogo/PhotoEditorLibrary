@@ -1,14 +1,16 @@
 package com.cmoney.photoeditorsampleapplication
 
+import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.cmoney.photoeditorsampleapplication.databinding.ActivityMainBinding
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener
+import ja.burhanrashid52.photoeditor.OnSaveBitmap
 import ja.burhanrashid52.photoeditor.PhotoEditor
 import ja.burhanrashid52.photoeditor.ViewType
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +44,6 @@ class MainActivity : AppCompatActivity() {
                 binding.confirmTextView.setOnClickListener {
                     photoEditor.editText(
                         rootView ?: return@setOnClickListener,
-                        null,
                         binding.inputEditText.text.toString(),
                         Color.YELLOW,
                         Color.RED
@@ -80,17 +81,30 @@ class MainActivity : AppCompatActivity() {
 
         binding.addTextTextView.setOnClickListener {
             photoEditor.addText(
-                Typeface.DEFAULT_BOLD,
                 binding.inputEditText.text.toString(),
-                Color.RED
+                Color.GREEN,
+                Color.BLUE
             )
             binding.inputEditText.text.clear()
+        }
+
+        binding.downloadTextView.setOnClickListener {
+            photoEditor.saveAsBitmap(object : OnSaveBitmap {
+                override fun onBitmapReady(saveBitmap: Bitmap?) {
+                    binding.resultImageView.setImageBitmap(saveBitmap)
+                }
+
+                override fun onFailure(exception: Exception?) {
+                    Log.e("PhotoEditor", "Failed to save Image")
+                }
+            })
         }
     }
 
     companion object {
         const val IMAGE_URL =
-            "https://i.pinimg.com/originals/59/54/b4/5954b408c66525ad932faa693a647e3f.jpg"
+            "https://i.kym-cdn.com/photos/images/facebook/001/295/524/cda.jpg"
+//            "https://i.pinimg.com/originals/59/54/b4/5954b408c66525ad932faa693a647e3f.jpg"
     }
 
 }

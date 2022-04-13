@@ -21,6 +21,8 @@ internal class BoxHelper(
             frmBorder?.setBackgroundResource(0)
             val imgClose = childAt.findViewById<ImageView>(R.id.imgPhotoEditorClose)
             imgClose?.visibility = View.GONE
+            val imgEdit = childAt.findViewById<ImageView>(R.id.imgPhotoEditorEdit)
+            imgEdit?.visibility = View.GONE
         }
         mViewState.clearCurrentSelectedView()
     }

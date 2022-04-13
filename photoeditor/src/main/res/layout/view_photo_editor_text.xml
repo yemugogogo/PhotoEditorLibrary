@@ -9,12 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        android:background="@drawable/rounded_border_tv">
+        android:background="@drawable/square_border_tv">
 
         <TextView
             android:id="@+id/tvPhotoEditorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
             android:layout_margin="4dp"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -25,10 +27,18 @@
 
     <ImageView
         android:id="@+id/imgPhotoEditorClose"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="top|start"
         android:elevation="1dp"
         android:src="@drawable/ic_remove" />
+
+    <ImageView
+        android:id="@+id/imgPhotoEditorEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:elevation="1dp"
+        android:src="@drawable/ic_edit" />
 
 </FrameLayout>

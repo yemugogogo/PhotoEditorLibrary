@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import kotlin.math.max
 import kotlin.math.min
 
+
 /**
  * Created on 18/01/2017.
  *
@@ -48,6 +49,7 @@ internal class MultiTouchListener(
     private val mOnPhotoEditorListener: OnPhotoEditorListener?
     private val viewState: PhotoEditorViewState
     override fun onTouch(view: View, event: MotionEvent): Boolean {
+        val viewGroup = view.parent
         mScaleGestureDetector.onTouchEvent(view, event)
         mGestureListener.onTouchEvent(event)
         if (!isTranslateEnabled) {
@@ -72,6 +74,7 @@ internal class MultiTouchListener(
             MotionEvent.ACTION_MOVE ->
                 // Only enable dragging on focused stickers.
                 if (view === viewState.currentSelectedView) {
+                    viewGroup.requestDisallowInterceptTouchEvent(true)
                     val pointerIndexMove = event.findPointerIndex(mActivePointerId)
                     if (pointerIndexMove != -1) {
                         val currX = event.getX(pointerIndexMove)
@@ -203,6 +206,21 @@ internal class MultiTouchListener(
         private const val INVALID_POINTER_ID = -1
         private fun adjustAngle(degrees: Float): Float {
             return when {
+                degrees in 85.0..95.0 -> {
+                    90.0F
+                }
+                degrees in 175.0..185.0 -> {
+                    180.0F
+                }
+                degrees in 265.0..275.0 -> {
+                    270.0F
+                }
+                degrees in 0.0..5.0 -> {
+                    0.0F
+                }
+                degrees in 355.0..360.0 -> {
+                    360.0F
+                }
                 degrees > 180.0f -> {
                     degrees - 360.0f
                 }
