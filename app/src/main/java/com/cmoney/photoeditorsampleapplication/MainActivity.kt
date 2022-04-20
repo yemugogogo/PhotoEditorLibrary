@@ -38,7 +38,12 @@ class MainActivity : AppCompatActivity() {
 
 
         photoEditor.setOnPhotoEditorListener(object : OnPhotoEditorListener {
-            override fun onEditTextChangeListener(rootView: View?, text: String?, colorCode: Int) {
+            override fun onEditTextChangeListener(
+                rootView: View?,
+                text: String?,
+                textColor: Int,
+                backgroundColor: Int
+            ) {
                 binding.inputEditText.setText(text.orEmpty())
                 showKeyboard(binding.inputEditText)
                 binding.confirmTextView.setOnClickListener {
@@ -46,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                         rootView ?: return@setOnClickListener,
                         binding.inputEditText.text.toString(),
                         Color.YELLOW,
-                        Color.RED
+                        backgroundColor
                     )
                 }
             }
@@ -57,6 +62,18 @@ class MainActivity : AppCompatActivity() {
 
             override fun onRemoveViewListener(viewType: ViewType?, numberOfAddedViews: Int) {
 //                TODO("Not yet implemented")
+            }
+
+            override fun onRemoveTextViewListener(
+                text: String?,
+                textColor: Int,
+                backgroundColor: Int,
+                numberOfAddedViews: Int
+            ) {
+                Log.d("remove","text = $text")
+                Log.d("remove","textColor = $textColor")
+                Log.d("remove","backgroundColor = $backgroundColor")
+                Log.d("remove","numberOfAddedViews = $numberOfAddedViews")
             }
 
             override fun onStartViewChangeListener(viewType: ViewType?) {

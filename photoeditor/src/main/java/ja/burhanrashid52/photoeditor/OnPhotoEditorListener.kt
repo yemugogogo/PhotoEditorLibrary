@@ -20,9 +20,15 @@ interface OnPhotoEditorListener {
      *
      * @param rootView  view on which the long press occurs
      * @param text      current text set on the view
-     * @param colorCode current color value set on view
+     * @param textColor current color value set on view
+     * @param backgroundColor current background color value set on view
      */
-    fun onEditTextChangeListener(rootView: View?, text: String?, colorCode: Int)
+    fun onEditTextChangeListener(
+        rootView: View?,
+        text: String?,
+        textColor: Int,
+        backgroundColor: Int
+    )
 
     /**
      * This is a callback when user adds any view on the [PhotoEditorView] it can be
@@ -42,6 +48,19 @@ interface OnPhotoEditorListener {
      * @param numberOfAddedViews number of views currently added
      */
     fun onRemoveViewListener(viewType: ViewType?, numberOfAddedViews: Int)
+
+    /**
+     * This is a callback when user remove view of TEXT[ViewType] on the [PhotoEditorView]
+     *
+     * @param text      current text set on the view
+     * @param textColor current color value set on view
+     * @param backgroundColor current background color value set on view
+     */
+    fun onRemoveTextViewListener(
+        text: String?,
+        textColor: Int,
+        backgroundColor: Int
+    )
 
     /**
      * A callback when user start dragging a view which can be

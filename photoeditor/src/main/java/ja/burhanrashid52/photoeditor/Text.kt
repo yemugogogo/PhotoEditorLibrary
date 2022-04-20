@@ -1,6 +1,10 @@
 package ja.burhanrashid52.photoeditor
 
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -48,10 +52,22 @@ internal class Text(
     }
 
     override fun updateView(view: View?) {
+        val currentBackgroundColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            (mTextView?.background as? GradientDrawable)?.color?.defaultColor ?: Color.TRANSPARENT
+        } else {
+            // TODO : might not be the right way to get the background color from GradientDrawable under the sdk 24
+            (mTextView?.background as? ColorDrawable)?.color ?: Color.TRANSPARENT
+        }
+
         val textInput = mTextView?.text.toString()
-        val currentTextColor = mTextView?.currentTextColor ?: 0
+        val currentTextColor = mTextView?.currentTextColor ?: Color.WHITE
         val photoEditorListener = mGraphicManager.onPhotoEditorListener
-        photoEditorListener?.onEditTextChangeListener(view, textInput, currentTextColor)
+        photoEditorListener?.onEditTextChangeListener(
+            view,
+            textInput,
+            currentTextColor,
+            currentBackgroundColor
+        )
     }
 
     init {

@@ -1,8 +1,14 @@
 package ja.burhanrashid52.photoeditor
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
 
 /**
  * Created by Burhanuddin Rashid on 15/05/21.
@@ -35,10 +41,34 @@ internal class GraphicManager(
             mViewGroup.removeView(view)
             mViewState.removeAddedView(view)
             mViewState.pushRedoView(view)
+
             onPhotoEditorListener?.onRemoveViewListener(
                 graphic.viewType,
                 mViewState.addedViewsCount
             )
+
+            if (graphic.viewType == ViewType.TEXT) {
+                try {
+                    val textView = view.findViewById<TextView>(R.id.tvPhotoEditorText)
+                    val textInput = textView?.text.toString()
+                    val currentTextColor = textView?.currentTextColor ?: Color.WHITE
+                    val currentBackgroundColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        (textView?.background as? GradientDrawable)?.color?.defaultColor
+                            ?: Color.TRANSPARENT
+                    } else {
+                        // TODO : might not be the right way to get the background color from GradientDrawable under the sdk 24
+                        (textView?.background as? ColorDrawable)?.color ?: Color.TRANSPARENT
+                    }
+                    onPhotoEditorListener?.onRemoveTextViewListener(
+                        textInput,
+                        currentTextColor,
+                        currentBackgroundColor
+                    )
+                } catch (exception: Exception){
+                    Log.e("GraphicManager","call onRemoveTextViewListener failed with $exception.")
+                }
+            }
+
         }
     }
 
