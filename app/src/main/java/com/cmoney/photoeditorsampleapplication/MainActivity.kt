@@ -38,7 +38,12 @@ class MainActivity : AppCompatActivity() {
 
 
         photoEditor.setOnPhotoEditorListener(object : OnPhotoEditorListener {
-            override fun onEditTextChangeListener(rootView: View?, text: String?, colorCode: Int) {
+            override fun onEditTextChangeListener(
+                rootView: View?,
+                text: String?,
+                textColor: Int,
+                backgroundColor: Int
+            ) {
                 binding.inputEditText.setText(text.orEmpty())
                 showKeyboard(binding.inputEditText)
                 binding.confirmTextView.setOnClickListener {
@@ -46,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                         rootView ?: return@setOnClickListener,
                         binding.inputEditText.text.toString(),
                         Color.YELLOW,
-                        Color.RED
+                        backgroundColor
                     )
                 }
             }

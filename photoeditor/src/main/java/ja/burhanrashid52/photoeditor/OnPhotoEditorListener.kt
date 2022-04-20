@@ -20,9 +20,15 @@ interface OnPhotoEditorListener {
      *
      * @param rootView  view on which the long press occurs
      * @param text      current text set on the view
-     * @param colorCode current color value set on view
+     * @param textColor current color value set on view
+     * @param backgroundColor current background color value set on view
      */
-    fun onEditTextChangeListener(rootView: View?, text: String?, colorCode: Int)
+    fun onEditTextChangeListener(
+        rootView: View?,
+        text: String?,
+        textColor: Int,
+        backgroundColor: Int
+    )
 
     /**
      * This is a callback when user adds any view on the [PhotoEditorView] it can be
