@@ -50,6 +50,19 @@ interface OnPhotoEditorListener {
     fun onRemoveViewListener(viewType: ViewType?, numberOfAddedViews: Int)
 
     /**
+     * This is a callback when user remove view of TEXT[ViewType] on the [PhotoEditorView]
+     *
+     * @param text      current text set on the view
+     * @param textColor current color value set on view
+     * @param backgroundColor current background color value set on view
+     */
+    fun onRemoveTextViewListener(
+        text: String?,
+        textColor: Int,
+        backgroundColor: Int
+    )
+
+    /**
      * A callback when user start dragging a view which can be
      * any of [ViewType]
      *

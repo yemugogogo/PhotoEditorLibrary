@@ -64,6 +64,18 @@ class MainActivity : AppCompatActivity() {
 //                TODO("Not yet implemented")
             }
 
+            override fun onRemoveTextViewListener(
+                text: String?,
+                textColor: Int,
+                backgroundColor: Int,
+                numberOfAddedViews: Int
+            ) {
+                Log.d("remove","text = $text")
+                Log.d("remove","textColor = $textColor")
+                Log.d("remove","backgroundColor = $backgroundColor")
+                Log.d("remove","numberOfAddedViews = $numberOfAddedViews")
+            }
+
             override fun onStartViewChangeListener(viewType: ViewType?) {
 //                TODO("Not yet implemented")
             }
