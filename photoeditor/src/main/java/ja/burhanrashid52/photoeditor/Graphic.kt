@@ -73,7 +73,8 @@ internal abstract class Graphic(
             }
 
             override fun onLongClick() {
-                updateView(rootView)
+                /* if you need long click to update view, just do it here. */
+//                updateView(rootView)
             }
         }
     }
