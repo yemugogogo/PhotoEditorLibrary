@@ -68,7 +68,7 @@ afterEvaluate {
 
                 groupId = 'com.github.yemugogogo'
                 artifactId = 'photo-editor'
-                version = '1.0.2-alpha01'
+                version = '1.0.2-alpha02'
             }
         }
     }
